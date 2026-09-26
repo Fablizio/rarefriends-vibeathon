@@ -7,7 +7,7 @@ A twin-stick, room-by-room dungeon crawler where your Generations Friend is the 
 Your ownership-verified Friend fights as itself, drawn from its canonical on-chain sprite, and its family (one of the nine) gives it a signature perk. The dungeon is built from the collection too: each floor belongs to a family, which sets its look, obstacles and enemy behaviour, and every enemy and boss is a real Generations Friend (token ID on screen) read live from the SDK's pinned artwork registry. Floor 1 is always your own family's turf.
 
 - **Play:** https://fablizio.github.io/the-binding-of-rarefriend/
-- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/c48b84e88481d02ff9866c8c3594c6b35d60cbef (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/c48b84e88481d02ff9866c8c3594c6b35d60cbef/games/binding-of-rarefriend))
+- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/5113e73930b60581fc3e3da5133aff4e8082b436 (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/5113e73930b60581fc3e3da5133aff4e8082b436/games/binding-of-rarefriend))
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -17,7 +17,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/the-binding-of-rarefriend.git
 cd the-binding-of-rarefriend
-git checkout c48b84e88481d02ff9866c8c3594c6b35d60cbef
+git checkout 5113e73930b60581fc3e3da5133aff4e8082b436
 npm ci
 npm run build
 npm run dev:game -- games/binding-of-rarefriend
