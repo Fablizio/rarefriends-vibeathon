@@ -6,18 +6,21 @@ A twin-stick, room-by-room dungeon crawler where your Generations Friend is the 
 
 Your ownership-verified Friend fights as itself, drawn from its canonical on-chain sprite, and its family (one of the nine) gives it a signature perk. The dungeon is built from the collection too: each floor belongs to a family, which sets its look, obstacles and enemy behaviour, and every enemy and boss is a real Generations Friend (token ID on screen) read live from the SDK's pinned artwork registry. Floor 1 is always your own family's turf.
 
-![binding-of-rarefriend demo](https://raw.githubusercontent.com/Fablizio/the-binding-of-rarefriend/a4c1a6859238b4d49008349a0d1175f2434c387d/games/binding-of-rarefriend/media/demo.gif)
+![binding-of-rarefriend demo](https://raw.githubusercontent.com/Fablizio/the-binding-of-rarefriend/cbf86033a15133a10c493a3ec963230586e3daca/games/binding-of-rarefriend/media/demo.gif)
 
 *Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/the-binding-of-rarefriend/
-- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/a4c1a6859238b4d49008349a0d1175f2434c387d (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/a4c1a6859238b4d49008349a0d1175f2434c387d/games/binding-of-rarefriend))
+- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/cbf86033a15133a10c493a3ec963230586e3daca (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/cbf86033a15133a10c493a3ec963230586e3daca/games/binding-of-rarefriend))
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## What makes your Friend unique
 
 - **Signature ability** derived from your Friend's own on-chain seed and token ID: one of 8 abilities (Ricochet, Boomerang, Orbit Shard, Chain Spark, Critical Eye, Heart Leech, Trailblazer, Fifth Shot). The same Friend always gets the same one, and it stacks with the family perk and relics.
 - **Generation bonus** read from your Friend's own `generation()`: gen 1 +1 heart · gen 2 +15% damage · gen 3 +10% fire rate · gen 4 +10% speed · gen 5 +15% range · gen 6+ +5% damage. If the read fails, the game shows no bonus and plays normally.
+- **Boss VS card:** your Friend against the floor's keeper (a real Friend), both large with their numbers, before every boss fight.
+- **Chiptune soundtrack** generated in code, one theme per family floor, with a boss variant, a victory jingle and a separate Music toggle.
+- **An elite Friend per floor** (4× size, one extra family move, a guaranteed reward) and 31 room layouts, including family-themed ones.
 - **Story:** "The descent of Friend #ID". On victory the defeated Friends bow ("The crypt remembers Friend #ID"), and there's **Copy result** to share the run on Telegram or X.
 
 ## Run it
@@ -27,7 +30,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/the-binding-of-rarefriend.git
 cd the-binding-of-rarefriend
-git checkout a4c1a6859238b4d49008349a0d1175f2434c387d
+git checkout cbf86033a15133a10c493a3ec963230586e3daca
 npm ci
 npm run build
 npm run dev:game -- games/binding-of-rarefriend
@@ -75,7 +78,7 @@ Possible RF integrations, not implemented: an RF-priced second-chance heart, RF-
   - `npm test`: 114 passed, 2 skipped.
   - `npm run typecheck` and strict `tsc -p games/binding-of-rarefriend/tsconfig.json`.
   - `npx friendsdk build games/binding-of-rarefriend`.
-- **Headless simulation** (`node games/binding-of-rarefriend/tests/run-sim.mjs`): a bot plays 54 full runs across all nine player families. Invulnerable, it clears the whole dungeon in 27 of 27 runs. With normal health it wins 1 of 27 and reaches floor 2.5 on average. Signatures are balanced (average floor reached 2.11–2.89 across the 8, same seeds) and evenly distributed over 20,000 IDs. It doesn't dodge, so this is not a balance measurement.
+- **Headless simulation** (`node games/binding-of-rarefriend/tests/run-sim.mjs`): a bot plays 54 full runs across all nine player families. Invulnerable, it clears the whole dungeon in 27 of 27 runs. With normal health it wins 2 of 27 and reaches floor 2.4 on average. All 31 layouts are connected and every floor has an elite room. Signatures are balanced (average floor reached 2.00–2.56 across the 8, same seeds). It doesn't dodge, so this is not a balance measurement.
 - **Browser check** (`node games/binding-of-rarefriend/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended to answer the artwork registry and Multicall3. It covers desktop, phone landscape and phone portrait with no browser errors.
 - **Known check failure:** the stock `npx friendsdk test` fixture only answers artwork reads for sample Friend #7730, so it rejects the roster reads for other Friends by design.
 - **Real-wallet playtest:** done by the builder with a hardwired Generation 6 Friend.
