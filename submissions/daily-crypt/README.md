@@ -6,9 +6,13 @@ A daily time-attack dungeon, the same for everyone. Every ranked attempt costs $
 
 Your ownership-verified Generations Friend runs a crypt of 10 rooms in a line. The rooms, the real Rare Friends inside them, their spawns and the power-up offer are generated from the UTC date, so every player faces exactly the same crypt. The lowest time wins, and each hit adds 5 seconds. Spending is the core loop: getting faster means paying for another attempt, and every attempt burns RF.
 
+![daily-crypt demo](https://raw.githubusercontent.com/Fablizio/daily-crypt/4ea9b62720f6162809a4ae552b4f708ba4693758/games/daily-crypt/media/demo.gif)
+
+*Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
+
 - **Play:** https://fablizio.github.io/daily-crypt/
-- **Source:** https://github.com/Fablizio/daily-crypt/tree/6195607d26709a8a1df5ee74a9a280712bbe88e9 (game in [`games/daily-crypt/`](https://github.com/Fablizio/daily-crypt/tree/6195607d26709a8a1df5ee74a9a280712bbe88e9/games/daily-crypt))
-- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/daily-crypt/blob/6195607d26709a8a1df5ee74a9a280712bbe88e9/games/daily-crypt/ECONOMY.md)
+- **Source:** https://github.com/Fablizio/daily-crypt/tree/4ea9b62720f6162809a4ae552b4f708ba4693758 (game in [`games/daily-crypt/`](https://github.com/Fablizio/daily-crypt/tree/4ea9b62720f6162809a4ae552b4f708ba4693758/games/daily-crypt))
+- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/daily-crypt/blob/4ea9b62720f6162809a4ae552b4f708ba4693758/games/daily-crypt/ECONOMY.md)
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -18,7 +22,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/daily-crypt.git
 cd daily-crypt
-git checkout 6195607d26709a8a1df5ee74a9a280712bbe88e9
+git checkout 4ea9b62720f6162809a4ae552b4f708ba4693758
 npm ci
 npm run build
 npm run dev:game -- games/daily-crypt
@@ -44,6 +48,13 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
 - **Room 10 is the boss:** a real Friend at 6× size with four attacks, faster below half health. The clock stops when it falls.
 - **No healing.** Each hit adds **+5 s**. You have **6 guard** (7 for Colossus), and the last hit ends the attempt.
 - **Score** = clear time + 5 s × hits. Your Friend's family perk applies.
+
+## More ways to spend (and burn)
+
+- **Paid continue:** once per ranked attempt, 5 RF, **100% burned**, +2 guard. It's recorded in the run and replay-verified: it's accepted only at the exact recorded tick.
+- **Halo shop:** cosmetic outline colours for your Friend (20–80 RF, **100% burned**). They're render-only and never touch the simulation.
+- **Burn panel and projection:** today's burn split into entries, continues and halos, plus a projection for 100 / 1,000 / 10,000 attempts a day. At 1,000/day that's about 3,650 RF burned a day, using stated assumptions.
+- **Viral loop:** **Copy result** to share your time, and a **ghost race** in Practice against your best run.
 
 ## Economy (simulated)
 
@@ -81,7 +92,8 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
   - Strict `tsc -p games/daily-crypt/tsconfig.json`.
   - `npm test` (SDK): 114 passed, 2 skipped. `npm run typecheck` passes.
 - **Headless bot simulation** (`node games/daily-crypt/tests/run-sim.mjs`), 54 full runs across all nine player families:
-  - every honest run re-verifies by replay (27/27);
+  - every honest run re-verifies by replay (27/27, including 17 runs that bought a continue);
+  - all 68 tampered continues are rejected, the ghost tracks its record 9/9, and halos have no effect on the simulation 9/9;
   - invulnerable, the bot clears the crypt in 22 of 27 runs, in roughly 2.5–6 minutes;
   - with normal guard it dies around room 4. It doesn't dodge, and the crypt is intended to be hard.
 - **Browser check** (`node games/daily-crypt/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended for the artwork registry. It covers desktop and phone layouts, the ranked-entry confirmation and play, with no browser errors.
