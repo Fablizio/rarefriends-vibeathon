@@ -6,9 +6,13 @@ A guild-management game where Rare Friends work for each other. Hire real Friend
 
 Every hardwired Generations Friend has its own canonical wallet, and Friend Guild gives that wallet a job. Your verified Friend runs a guild and hires real Friends (read live from the SDK's artwork registry) for expeditions, and each fee pays the hired Friend's owner. Expeditions never create RF: they bring Shards, a soft currency that is spent together with RF (burned) on upgrades and gear. An in-game economy simulator runs the whole economy for 30 days with adjustable parameters.
 
+![friend-guild demo](https://raw.githubusercontent.com/Fablizio/friend-guild/e98ea681e576b5866edf2004a7c7009334e4306b/games/friend-guild/media/demo.gif)
+
+*Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
+
 - **Play:** https://fablizio.github.io/friend-guild/
-- **Source:** https://github.com/Fablizio/friend-guild/tree/3155a7e573a38975ae1d9c4121748ce296767ac9 (game in [`games/friend-guild/`](https://github.com/Fablizio/friend-guild/tree/3155a7e573a38975ae1d9c4121748ce296767ac9/games/friend-guild))
-- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/friend-guild/blob/3155a7e573a38975ae1d9c4121748ce296767ac9/games/friend-guild/ECONOMY.md)
+- **Source:** https://github.com/Fablizio/friend-guild/tree/e98ea681e576b5866edf2004a7c7009334e4306b (game in [`games/friend-guild/`](https://github.com/Fablizio/friend-guild/tree/e98ea681e576b5866edf2004a7c7009334e4306b/games/friend-guild))
+- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/friend-guild/blob/e98ea681e576b5866edf2004a7c7009334e4306b/games/friend-guild/ECONOMY.md)
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -18,7 +22,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/friend-guild.git
 cd friend-guild
-git checkout 3155a7e573a38975ae1d9c4121748ce296767ac9
+git checkout e98ea681e576b5866edf2004a7c7009334e4306b
 npm ci
 npm run build
 npm run dev:game -- games/friend-guild
@@ -70,13 +74,24 @@ Tap or click. Everything is also keyboard-accessible.
   - a game server for Shards and fame;
   - a legal review of holder earnings.
 
+## Stress-tested economy
+
+- **Model:** players join and leave the simulator each day, and the listed-Friend pool follows them. RF conservation and determinism still hold.
+- **Scenario presets** (1,000 players, seed 42, 30 days):
+  - **Baseline:** 713K RF burned (32% of RF spent). A listed Friend earns about 56 RF/day, and a player spends about 75 RF/day.
+  - **Bear market:** players fall 1,000 → 413. The daily burn falls 51% from its peak, but a listed Friend still earns about 32 RF/day, because the listed pool shrinks too.
+  - **Hype:** players grow 1,000 → 4,115, and the daily burn grows from 31K to 96K RF.
+  - **Whales:** 5% of players spend 17% of all RF, and the top 10% of Friends still earn only 14% of owner income.
+  - **Bot attack:** self-hiring bots lose 30% of what they spend (burn plus season). A per-Friend hire cap of 3 a day cuts wash volume by 65%.
+- **Flow diagram:** RF flows are shown in the game and as a Mermaid chart in ECONOMY.md.
+
 ## Checks, credits and limitations
 
 - **Passed:**
   - `npx friendsdk check games/friend-guild`: valid.
   - Strict `tsc -p games/friend-guild/tsconfig.json`.
   - `npm test` (SDK): 114 passed, 2 skipped. `npm run typecheck` passes.
-- **Model checks** (`node games/friend-guild/tests/run-econ.mjs`): 9 passed. Fee splits conserve RF, the model never mints RF and is deterministic, a higher burn burns more, earnings stay spread, and Shard supply is bounded.
+- **Model checks** (`node games/friend-guild/tests/run-econ.mjs`): 15 passed. Fee splits and growth/churn conserve RF, the model never mints RF and is deterministic, a higher burn burns more, earnings stay spread, Shard supply is bounded, all presets run, the bot attack is net-negative for the attackers, and the hire cap limits wash volume.
 - **Browser check** (`node games/friend-guild/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended for the artwork registry. It walks guild → hire two → launch → skip → result → workshop → economy on desktop and phone layouts, with no browser errors.
 - **Real-wallet playtest:** done by the builder with a hardwired Generation 6 Friend.
 - **Known check failure:** the stock `npx friendsdk test` fixture only answers artwork reads for sample Friend #7730, so it rejects the tavern's roster reads by design.
