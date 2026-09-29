@@ -2,17 +2,17 @@
 
 A daily time-attack dungeon, the same for everyone. Every ranked attempt costs $RAREFRIENDS: 20% is burned and 80% funds the prize pool for the day's three fastest verified runs.
 
-**Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Token Activity · **SDK:** FriendSDK v0.1.2
+**Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Token Activity · **SDK:** FriendSDK v0.1.4
 
 Your ownership-verified Generations Friend runs a crypt of 10 rooms in a line. The rooms, the real Rare Friends inside them, their spawns and the power-up offer are generated from the UTC date, so every player faces exactly the same crypt. The lowest time wins, and each hit adds 5 seconds. Spending is the core loop: getting faster means paying for another attempt, and every attempt burns RF.
 
-![daily-crypt demo](https://raw.githubusercontent.com/Fablizio/daily-crypt/4ea9b62720f6162809a4ae552b4f708ba4693758/games/daily-crypt/media/demo.gif)
+![daily-crypt demo](https://raw.githubusercontent.com/Fablizio/daily-crypt/969275543b830708667fff1dc70c6d15ef694406/games/daily-crypt/media/demo.gif)
 
 *Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/daily-crypt/
-- **Source:** https://github.com/Fablizio/daily-crypt/tree/4ea9b62720f6162809a4ae552b4f708ba4693758 (game in [`games/daily-crypt/`](https://github.com/Fablizio/daily-crypt/tree/4ea9b62720f6162809a4ae552b4f708ba4693758/games/daily-crypt))
-- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/daily-crypt/blob/4ea9b62720f6162809a4ae552b4f708ba4693758/games/daily-crypt/ECONOMY.md)
+- **Source:** https://github.com/Fablizio/daily-crypt/tree/969275543b830708667fff1dc70c6d15ef694406 (game in [`games/daily-crypt/`](https://github.com/Fablizio/daily-crypt/tree/969275543b830708667fff1dc70c6d15ef694406/games/daily-crypt))
+- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/daily-crypt/blob/969275543b830708667fff1dc70c6d15ef694406/games/daily-crypt/ECONOMY.md)
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -22,7 +22,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/daily-crypt.git
 cd daily-crypt
-git checkout 4ea9b62720f6162809a4ae552b4f708ba4693758
+git checkout 969275543b830708667fff1dc70c6d15ef694406
 npm ci
 npm run build
 npm run dev:game -- games/daily-crypt
@@ -80,7 +80,7 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
 - A ranked run is **re-simulated from its inputs** and only the recomputed time is ranked. **Watch replay** plays the log back.
 - In production this check runs on a server before payouts.
 
-**Going live** needs custom integration beyond v0.1.2, which has no leaderboard, persistence or pool API:
+**Going live** needs custom integration beyond v0.1.4, which has no leaderboard, persistence or pool API:
 - a pool contract (`enter` burns 2 RF from the Friend's canonical wallet and adds 8 RF to the day's pool);
 - a verifier that settles the top 3 at the end of each day;
 - a legal review of paid-entry prize contests.
@@ -90,7 +90,7 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
 - **Passed:**
   - `npx friendsdk check games/daily-crypt`: valid.
   - Strict `tsc -p games/daily-crypt/tsconfig.json`.
-  - `npm test` (SDK): 114 passed, 2 skipped. `npm run typecheck` passes.
+  - `npm test` (SDK): 116 passed, 2 skipped. `npm run typecheck` passes.
 - **Headless bot simulation** (`node games/daily-crypt/tests/run-sim.mjs`), 54 full runs across all nine player families:
   - every honest run re-verifies by replay (27/27, including 17 runs that bought a continue);
   - all 68 tampered continues are rejected, the ghost tracks its record 9/9, and halos have no effect on the simulation 9/9;
