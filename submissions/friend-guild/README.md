@@ -2,17 +2,17 @@
 
 A guild-management game where Rare Friends work for each other. Hire real Friends as mercenaries: 70% of every fee goes to the hired Friend's own wallet, 20% is burned and 10% funds the season.
 
-**Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Economy Potential · **SDK:** FriendSDK v0.1.2
+**Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Economy Potential · **SDK:** FriendSDK v0.1.4
 
 Every hardwired Generations Friend has its own canonical wallet, and Friend Guild gives that wallet a job. Your verified Friend runs a guild and hires real Friends (read live from the SDK's artwork registry) for expeditions, and each fee pays the hired Friend's owner. Expeditions never create RF: they bring Shards, a soft currency that is spent together with RF (burned) on upgrades and gear. An in-game economy simulator runs the whole economy for 30 days with adjustable parameters.
 
-![friend-guild demo](https://raw.githubusercontent.com/Fablizio/friend-guild/e98ea681e576b5866edf2004a7c7009334e4306b/games/friend-guild/media/demo.gif)
+![friend-guild demo](https://raw.githubusercontent.com/Fablizio/friend-guild/649dedd59e363a597780c8470f7335d858c3f063/games/friend-guild/media/demo.gif)
 
 *Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/friend-guild/
-- **Source:** https://github.com/Fablizio/friend-guild/tree/e98ea681e576b5866edf2004a7c7009334e4306b (game in [`games/friend-guild/`](https://github.com/Fablizio/friend-guild/tree/e98ea681e576b5866edf2004a7c7009334e4306b/games/friend-guild))
-- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/friend-guild/blob/e98ea681e576b5866edf2004a7c7009334e4306b/games/friend-guild/ECONOMY.md)
+- **Source:** https://github.com/Fablizio/friend-guild/tree/649dedd59e363a597780c8470f7335d858c3f063 (game in [`games/friend-guild/`](https://github.com/Fablizio/friend-guild/tree/649dedd59e363a597780c8470f7335d858c3f063/games/friend-guild))
+- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/friend-guild/blob/649dedd59e363a597780c8470f7335d858c3f063/games/friend-guild/ECONOMY.md)
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -22,7 +22,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/friend-guild.git
 cd friend-guild
-git checkout e98ea681e576b5866edf2004a7c7009334e4306b
+git checkout 649dedd59e363a597780c8470f7335d858c3f063
 npm ci
 npm run build
 npm run dev:game -- games/friend-guild
@@ -69,7 +69,7 @@ Tap or click. Everything is also keyboard-accessible.
   - Shard supply levels off;
   - the conservation check passes.
 - **Chance-game API:** the SDK's chance game is not used. The required `game.json` carries **unused schema-only terms**: a 1 RF token with a single 10,000 bps reward of 1 RF, both `1000000000000000000` base units.
-- **Going live** needs custom integration beyond v0.1.2, which has no hire, listing, currency or persistence API:
+- **Going live** needs custom integration beyond v0.1.4, which has no hire, listing, currency or persistence API:
   - a GuildHire contract (`hire` pays 70% to the canonical wallet, burns 20% and sends 10% to the season);
   - a game server for Shards and fame;
   - a legal review of holder earnings.
@@ -90,7 +90,7 @@ Tap or click. Everything is also keyboard-accessible.
 - **Passed:**
   - `npx friendsdk check games/friend-guild`: valid.
   - Strict `tsc -p games/friend-guild/tsconfig.json`.
-  - `npm test` (SDK): 114 passed, 2 skipped. `npm run typecheck` passes.
+  - `npm test` (SDK): 116 passed, 2 skipped. `npm run typecheck` passes.
 - **Model checks** (`node games/friend-guild/tests/run-econ.mjs`): 15 passed. Fee splits and growth/churn conserve RF, the model never mints RF and is deterministic, a higher burn burns more, earnings stay spread, Shard supply is bounded, all presets run, the bot attack is net-negative for the attackers, and the hire cap limits wash volume.
 - **Browser check** (`node games/friend-guild/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended for the artwork registry. It walks guild → hire two → launch → skip → result → workshop → economy on desktop and phone layouts, with no browser errors.
 - **Real-wallet playtest:** done by the builder with a hardwired Generation 6 Friend.
