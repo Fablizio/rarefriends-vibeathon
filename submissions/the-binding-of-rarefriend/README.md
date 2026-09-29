@@ -2,16 +2,16 @@
 
 A twin-stick, room-by-room dungeon crawler where your Generations Friend is the hero and every enemy and boss is another real Rare Friend.
 
-**Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Character Spotlight · **SDK:** FriendSDK v0.1.2
+**Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Character Spotlight · **SDK:** FriendSDK v0.1.4
 
 Your ownership-verified Friend fights as itself, drawn from its canonical on-chain sprite, and its family (one of the nine) gives it a signature perk. The dungeon is built from the collection too: each floor belongs to a family, which sets its look, obstacles and enemy behaviour, and every enemy and boss is a real Generations Friend (token ID on screen) read live from the SDK's pinned artwork registry. Floor 1 is always your own family's turf.
 
-![binding-of-rarefriend demo](https://raw.githubusercontent.com/Fablizio/the-binding-of-rarefriend/cbf86033a15133a10c493a3ec963230586e3daca/games/binding-of-rarefriend/media/demo.gif)
+![binding-of-rarefriend demo](https://raw.githubusercontent.com/Fablizio/the-binding-of-rarefriend/462c57d267c9d03e1063627c667436806441816c/games/binding-of-rarefriend/media/demo.gif)
 
 *Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/the-binding-of-rarefriend/
-- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/cbf86033a15133a10c493a3ec963230586e3daca (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/cbf86033a15133a10c493a3ec963230586e3daca/games/binding-of-rarefriend))
+- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/462c57d267c9d03e1063627c667436806441816c (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/462c57d267c9d03e1063627c667436806441816c/games/binding-of-rarefriend))
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## What makes your Friend unique
@@ -30,7 +30,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/the-binding-of-rarefriend.git
 cd the-binding-of-rarefriend
-git checkout cbf86033a15133a10c493a3ec963230586e3daca
+git checkout 462c57d267c9d03e1063627c667436806441816c
 npm ci
 npm run build
 npm run dev:game -- games/binding-of-rarefriend
@@ -67,15 +67,15 @@ For each run (and on **New cast**), the game samples 120 random token IDs in 1�
 
 ## Economy
 
-**0 RF. Play is free, with no purchases, consumables, rewards or simulated balances.** Sparks and relics last one run and reset on reload. The v0.1.2 runtime requires a chance-game `game.json`, so the game ships **unused schema-only terms** (a 1 RF token with a single 10,000 bps reward of 1 RF, `1000000000000000000` base units each). The component never calls `buy`, `play`, `settle` or `redeem`. Token Activity metrics are not claimed.
+**0 RF. Play is free, with no purchases, consumables, rewards or simulated balances.** Sparks and relics last one run and reset on reload. The v0.1.4 runtime requires a chance-game `game.json`, so the game ships **unused schema-only terms** (a 1 RF token with a single 10,000 bps reward of 1 RF, `1000000000000000000` base units each). The component never calls `buy`, `play`, `settle` or `redeem`. Token Activity metrics are not claimed.
 
-Possible RF integrations, not implemented: an RF-priced second-chance heart, RF-backed cosmetic halos, and a seeded weekly crypt with an RF-funded prize pool. These would need custom integration beyond the v0.1.2 bridge, which has no persistence, upgrade or extra-currency APIs.
+Possible RF integrations, not implemented: an RF-priced second-chance heart, RF-backed cosmetic halos, and a seeded weekly crypt with an RF-funded prize pool. These would need custom integration beyond the v0.1.4 bridge, which has no persistence, upgrade or extra-currency APIs.
 
 ## Checks, credits and limitations
 
 - **Passed:**
   - `npx friendsdk check games/binding-of-rarefriend` and `npm run check:games`.
-  - `npm test`: 114 passed, 2 skipped.
+  - `npm test`: 116 passed, 2 skipped.
   - `npm run typecheck` and strict `tsc -p games/binding-of-rarefriend/tsconfig.json`.
   - `npx friendsdk build games/binding-of-rarefriend`.
 - **Headless simulation** (`node games/binding-of-rarefriend/tests/run-sim.mjs`): a bot plays 54 full runs across all nine player families. Invulnerable, it clears the whole dungeon in 27 of 27 runs. With normal health it wins 2 of 27 and reaches floor 2.4 on average. All 31 layouts are connected and every floor has an elite room. Signatures are balanced (average floor reached 2.00–2.56 across the 8, same seeds). It doesn't dodge, so this is not a balance measurement.
