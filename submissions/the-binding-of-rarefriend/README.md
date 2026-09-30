@@ -10,12 +10,12 @@ A twin-stick, room-by-room dungeon crawler where your Generations Friend is the 
 
 Your ownership-verified Friend fights as itself, drawn from its canonical on-chain sprite, and its family (one of the nine) gives it a signature perk. The dungeon is built from the collection too: each floor belongs to a family, which sets its look, obstacles and enemy behaviour, and every enemy and boss is a real Generations Friend (token ID on screen) read live from the SDK's pinned artwork registry. Floor 1 is always your own family's turf.
 
-![binding-of-rarefriend demo](https://raw.githubusercontent.com/Fablizio/the-binding-of-rarefriend/257b45c4885cce719304ab65fc587e8abc7876ac/games/binding-of-rarefriend/media/demo.gif)
+![binding-of-rarefriend demo](https://raw.githubusercontent.com/Fablizio/the-binding-of-rarefriend/16b11b46c10cfe4321e624d9dab99a24997c2bba/games/binding-of-rarefriend/media/demo.gif)
 
 *Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/the-binding-of-rarefriend/
-- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/257b45c4885cce719304ab65fc587e8abc7876ac (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/257b45c4885cce719304ab65fc587e8abc7876ac/games/binding-of-rarefriend))
+- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/16b11b46c10cfe4321e624d9dab99a24997c2bba (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/16b11b46c10cfe4321e624d9dab99a24997c2bba/games/binding-of-rarefriend))
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## What makes your Friend unique
@@ -25,7 +25,7 @@ Your ownership-verified Friend fights as itself, drawn from its canonical on-cha
 - **Boss VS card:** your Friend against the floor's keeper (a real Friend), both large with their numbers, before every boss fight.
 - **Chiptune soundtrack** generated in code, one theme per family floor, with a boss variant, a victory jingle and a separate Music toggle.
 - **An elite Friend per floor** (4× size, one extra family move, a guaranteed reward) and 31 room layouts, including family-themed ones.
-- **Keys, locked rooms, chests, coins, shops and the Room of Pain:** from floor 2 the treasure room and the shop are behind padlocked doors that take a key (floor 1 is open; the boss path never needs a key, and the first fight room cleared on each floor from floor 2 always drops one). Rare chests come open (brown: coins, sometimes a half heart or key) or locked (grey and gold: more coins, maybe a relic or heart). Coins buy from a per-floor shop (half heart 2, heart 3, key 4, heart container 8, relic 7–10; walk over an item to buy it). The Room of Pain costs half a heart to enter and half to leave (never lethal) and hides either a tougher fight that pays a relic, or a relic plus a chest. All run-only game items, 0 RF.
+- **Keys, locked rooms, chests, coins, shops and the Room of Pain:** from floor 2 the treasure room and the shop are behind padlocked doors that take a key (floor 1 is open; the boss path never needs a key, and the first fight room cleared on each floor from floor 2 always drops one). Rare chests come open (brown: coins, sometimes a half heart or key) or locked (grey and gold: more coins, maybe a relic or heart). Coins buy from a per-floor shop (half heart 2, heart 3, key 4, relic 7–10; walk over an item to buy it; no heart containers for sale). The Room of Pain costs half a heart to enter and half to leave, paid in full: at half a heart the toll kills, and its doors show a red LETHAL warning when it would. It hides either a tougher fight that pays a relic, or a relic plus a chest. All run-only game items, 0 RF.
 - **Story:** "The descent of Friend #ID". On victory the defeated Friends bow ("The crypt remembers Friend #ID"), and there's **Copy result** to share the run on Telegram or X.
 
 ## Run it
@@ -35,7 +35,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/the-binding-of-rarefriend.git
 cd the-binding-of-rarefriend
-git checkout 257b45c4885cce719304ab65fc587e8abc7876ac
+git checkout 16b11b46c10cfe4321e624d9dab99a24997c2bba
 npm ci
 npm run build
 npm run dev:game -- games/binding-of-rarefriend
@@ -55,7 +55,7 @@ Settings and the pause menu include **Mute** and **Reduce motion** (no shake, fa
 
 ## Rules
 
-- A run is **4 floors**. Each floor is a grid of single-screen rooms with a start room, fights, a **treasure room**, a **shop**, a **Room of Pain** and a **boss room**. From floor 2 the treasure room and the shop need a key; the Room of Pain costs half a heart each way but never kills.
+- A run is **4 floors**. Each floor is a grid of single-screen rooms with a start room, fights, a **treasure room**, a **shop**, a **Room of Pain** and a **boss room**. From floor 2 the treasure room and the shop need a key; the Room of Pain costs half a heart each way and the toll can end the run.
 - Doors lock until every Friend in the room is defeated. Cleared rooms may drop a heart or a spark.
 - Each boss is a real Friend at 6× size with three family attacks, and it speeds up below half health. Beating it gives a relic, a heart and the way down. The fourth boss opens the exit.
 - You start with 3 hearts. Hits cost half a heart (bosses a full heart from floor 2), followed by brief invulnerability.
@@ -83,7 +83,7 @@ Possible RF integrations, not implemented: an RF-priced second-chance heart, RF-
   - `npm test`: 116 passed, 2 skipped.
   - `npm run typecheck` and strict `tsc -p games/binding-of-rarefriend/tsconfig.json`.
   - `npx friendsdk build games/binding-of-rarefriend`.
-- **Headless simulation** (`node games/binding-of-rarefriend/tests/run-sim.mjs`): a bot plays 54 full runs across all nine player families. Difficulty was raised after playtesting (enemies +25% HP and +10% speed, faster enemy shots, elites and bosses +30% HP, earlier boss enrage, one more Friend per room from floor 2, fewer hearts). Invulnerable, the bot still clears the whole dungeon in 27 of 27 runs, so every layout stays beatable. With normal health it reaches floor 1.63 on average (2.37 before the change) and dies mostly to the first boss; after keys, chests, coins, shops and Rooms of Pain were added it reaches floor 1.78 (the invulnerable bot still clears 27/27 and finds about 5.5 coins, 1.5 keys and 1.3 chests a floor). The sim also checks 400 floors for one shop and one Room of Pain each, all rooms connected, the boss reachable without keys, the key guarantee from floor 2 and that the pain toll never kills. On the same 18 seeds it reaches floor 2.33 as Gen 1 (Legendary) versus 1.39 as Gen 6. All 31 layouts are connected and every floor has an elite room. Signatures stay close (average floor 1.2–1.7 across the 8, same seeds). It doesn't dodge, so this is not a balance measurement.
+- **Headless simulation** (`node games/binding-of-rarefriend/tests/run-sim.mjs`): a bot plays 54 full runs across all nine player families. Difficulty was raised after playtesting (enemies +25% HP and +10% speed, faster enemy shots, elites and bosses +30% HP, earlier boss enrage, one more Friend per room from floor 2, fewer hearts). Invulnerable, the bot still clears the whole dungeon in 27 of 27 runs, so every layout stays beatable. With normal health it reaches floor 1.63 on average (2.37 before the change) and dies mostly to the first boss; after keys, chests, coins, shops and lethal Rooms of Pain were added it still reaches floor 1.63 (the invulnerable bot still clears 27/27 and finds about 6.4 coins, 1.6 keys and 1.5 chests a floor). The sim also checks 400 floors for one shop and one Room of Pain each, all rooms connected, the boss reachable without keys, the key guarantee from floor 2, and that a toll at half a heart kills (as the Room of Pain, not a hit) with the lethal warning shown. On the same 18 seeds it reaches floor 2.11 as Gen 1 (Legendary) versus 1.61 as Gen 6. All 31 layouts are connected and every floor has an elite room. Signatures average floor 1.6–2.2 across the 8 (same seeds). It doesn't dodge, so this is not a balance measurement.
 - **Browser check** (`node games/binding-of-rarefriend/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended to answer the artwork registry and Multicall3. It covers desktop, phone landscape and phone portrait with no browser errors.
 - **Known check failure:** the stock `npx friendsdk test` fixture only answers artwork reads for sample Friend #7730, so it rejects the roster reads for other Friends by design.
 - **Real-wallet playtest:** done by the builder with a hardwired Generation 6 Friend.
