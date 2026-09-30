@@ -7,6 +7,7 @@ A guild-management game where Rare Friends work for each other. Hire real Friend
 > - **Every fee pays a real Friend's wallet:** 70% of each hire goes to the hired Friend's own canonical wallet.
 > - **Generation sets the value:** Gen 1 ×3 … Gen 6 ×1 on the fee, so in-game value tracks market value.
 > - **Stress-tested economy:** growth and churn, scenario presets (bear, hype, whales), a bot attack and a per-Friend hire cap, all conserving RF.
+> - **Chiptune soundtrack (tavern theme, family expedition themes, jingles) and animated fights:** each expedition encounter plays as a short fight that replays the already-decided result.
 >
 > FriendSDK v0.1.4 · the preview never asks for a transaction, signature or approval · played by the builder with a real wallet and a Generation 6 Friend
 
@@ -18,13 +19,13 @@ Every hardwired Generations Friend has its own canonical wallet, and Friend Guil
 
 In-game value follows market value: a Friend's generation (read on chain, `generation(id)`, batched through Multicall3) multiplies its hire fee, so its wallet earns in step with its market price, and raises its expedition power by a quarter of that premium, so rare mercenaries are worth hiring but never mandatory. Holding rarer Friends pays. Tier multipliers (fee ×, power ×): **Gen 1 Legendary ×3 (1.5) · Gen 2 Epic ×2 (1.25) · Gen 3 Rare ×1.5 (1.125) · Gen 4 Uncommon ×1.25 · Gen 5 Common ×1.1 · Gen 6+ Standard ×1 · unknown/failed read "Gen ?" ×1.** Every mercenary card and your own Friend show a badge such as **GEN 1 · LEGENDARY ×3**; the 70/20/10 split, demand pricing and RF conservation are unchanged. In the simulator a listed Gen 1 Friend earns about 198 RF/day vs 56 for a Gen 6 (exactly 3× per hire, about 3.5× overall). Genesis NFTs are a separate collection that FriendSDK v0.1.4 cannot select as a player; a Genesis tier is on the roadmap.
 
-![friend-guild demo](https://raw.githubusercontent.com/Fablizio/friend-guild/0eb3c8c91d1a082be3ceab3983a6dd66be498173/games/friend-guild/media/demo.gif)
+![friend-guild demo](https://raw.githubusercontent.com/Fablizio/friend-guild/79689bcab4075854cb9e9ba1469415a472aa7aa7/games/friend-guild/media/demo.gif)
 
-*Demo recorded headlessly with SDK sample sprites and a bot at the controls, before the generation tier badges; in play you see your own Friend and live Friends from the chain.*
+*Demo recorded headlessly with SDK sample sprites and a bot at the controls (the GIF has no sound); in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/friend-guild/
-- **Source:** https://github.com/Fablizio/friend-guild/tree/0eb3c8c91d1a082be3ceab3983a6dd66be498173 (game in [`games/friend-guild/`](https://github.com/Fablizio/friend-guild/tree/0eb3c8c91d1a082be3ceab3983a6dd66be498173/games/friend-guild))
-- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/friend-guild/blob/0eb3c8c91d1a082be3ceab3983a6dd66be498173/games/friend-guild/ECONOMY.md)
+- **Source:** https://github.com/Fablizio/friend-guild/tree/79689bcab4075854cb9e9ba1469415a472aa7aa7 (game in [`games/friend-guild/`](https://github.com/Fablizio/friend-guild/tree/79689bcab4075854cb9e9ba1469415a472aa7aa7/games/friend-guild))
+- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/friend-guild/blob/79689bcab4075854cb9e9ba1469415a472aa7aa7/games/friend-guild/ECONOMY.md)
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -34,7 +35,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/friend-guild.git
 cd friend-guild
-git checkout 0eb3c8c91d1a082be3ceab3983a6dd66be498173
+git checkout 79689bcab4075854cb9e9ba1469415a472aa7aa7
 npm ci
 npm run build
 npm run dev:game -- games/friend-guild
@@ -89,7 +90,7 @@ Tap or click. Everything is also keyboard-accessible.
 
 ## Relation to the protocol's 50/50 rule
 
-The Rare Friends protocol splits activation, hardwire, promote and upgrade payments 50% burned / 50% RF rewards for Friends' NFT wallets ([source](https://iq.wiki/en/wiki/rare-friends)). Friend Guild's hire split is **70% to the hired Friend's own wallet, 20% burned, 10% to the season fund** (workshop RF is 100% burned): a hire is a service paid to one specific Friend, so its wallet gets the largest share, unlike protocol-level upgrades. A **protocol-aligned variant** (50% to the hired Friend's wallet, 50% burned), run with the model's split parameters on the same Baseline, spends the same 2,509,709 RF but burns 1,419,482 (56.6%) and pays owners 1,090,226 (43.4%): Gen 1 vs Gen 6 wallets earn 141.5 vs 39.7 RF/day. The default stays 70/20/10 ([details](https://github.com/Fablizio/friend-guild/blob/0eb3c8c91d1a082be3ceab3983a6dd66be498173/games/friend-guild/ECONOMY.md#relation-to-the-protocols-5050-rule)).
+The Rare Friends protocol splits activation, hardwire, promote and upgrade payments 50% burned / 50% RF rewards for Friends' NFT wallets ([source](https://iq.wiki/en/wiki/rare-friends)). Friend Guild's hire split is **70% to the hired Friend's own wallet, 20% burned, 10% to the season fund** (workshop RF is 100% burned): a hire is a service paid to one specific Friend, so its wallet gets the largest share, unlike protocol-level upgrades. A **protocol-aligned variant** (50% to the hired Friend's wallet, 50% burned), run with the model's split parameters on the same Baseline, spends the same 2,509,709 RF but burns 1,419,482 (56.6%) and pays owners 1,090,226 (43.4%): Gen 1 vs Gen 6 wallets earn 141.5 vs 39.7 RF/day. The default stays 70/20/10 ([details](https://github.com/Fablizio/friend-guild/blob/79689bcab4075854cb9e9ba1469415a472aa7aa7/games/friend-guild/ECONOMY.md#relation-to-the-protocols-5050-rule)).
 
 ## Stress-tested economy
 
