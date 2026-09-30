@@ -8,7 +8,7 @@ A guild-management game where Rare Friends work for each other. Hire real Friend
 > - **Generation sets the value:** Gen 1 ×3 … Gen 6 ×1 on the fee, so in-game value tracks market value.
 > - **Stress-tested economy:** growth and churn, scenario presets (bear, hype, whales), a bot attack and a per-Friend hire cap, all conserving RF.
 >
-> FriendSDK v0.1.4 · the preview never asks for a transaction, signature or approval · played with a real wallet (Generation 6 Friend) on phone and desktop
+> FriendSDK v0.1.4 · the preview never asks for a transaction, signature or approval · played by the builder with a real wallet and a Generation 6 Friend
 
 **Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Economy Potential · **SDK:** FriendSDK v0.1.4
 
