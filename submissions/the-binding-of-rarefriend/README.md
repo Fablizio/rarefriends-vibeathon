@@ -6,18 +6,18 @@ A twin-stick, room-by-room dungeon crawler where your Generations Friend is the 
 
 Your ownership-verified Friend fights as itself, drawn from its canonical on-chain sprite, and its family (one of the nine) gives it a signature perk. The dungeon is built from the collection too: each floor belongs to a family, which sets its look, obstacles and enemy behaviour, and every enemy and boss is a real Generations Friend (token ID on screen) read live from the SDK's pinned artwork registry. Floor 1 is always your own family's turf.
 
-![binding-of-rarefriend demo](https://raw.githubusercontent.com/Fablizio/the-binding-of-rarefriend/462c57d267c9d03e1063627c667436806441816c/games/binding-of-rarefriend/media/demo.gif)
+![binding-of-rarefriend demo](https://raw.githubusercontent.com/Fablizio/the-binding-of-rarefriend/e3f5894b21eff723cc22808cc36ac096ddc1c4ac/games/binding-of-rarefriend/media/demo.gif)
 
 *Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/the-binding-of-rarefriend/
-- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/462c57d267c9d03e1063627c667436806441816c (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/462c57d267c9d03e1063627c667436806441816c/games/binding-of-rarefriend))
+- **Source:** https://github.com/Fablizio/the-binding-of-rarefriend/tree/e3f5894b21eff723cc22808cc36ac096ddc1c4ac (game in [`games/binding-of-rarefriend/`](https://github.com/Fablizio/the-binding-of-rarefriend/tree/e3f5894b21eff723cc22808cc36ac096ddc1c4ac/games/binding-of-rarefriend))
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## What makes your Friend unique
 
 - **Signature ability** derived from your Friend's own on-chain seed and token ID: one of 8 abilities (Ricochet, Boomerang, Orbit Shard, Chain Spark, Critical Eye, Heart Leech, Trailblazer, Fifth Shot). The same Friend always gets the same one, and it stacks with the family perk and relics.
-- **Generation bonus** read from your Friend's own `generation()`: gen 1 +1 heart · gen 2 +15% damage · gen 3 +10% fire rate · gen 4 +10% speed · gen 5 +15% range · gen 6+ +5% damage. If the read fails, the game shows no bonus and plays normally.
+- **Generation rank** read from your Friend's own `generation()`, a ladder where rarer is stronger: Gen 1 Legendary +1 heart, +15% damage, +10% fire rate and a gold outline · Gen 2 Epic +1 heart, +10% damage · Gen 3 Rare +10% damage, +5% fire rate · Gen 4 Uncommon +10% damage · Gen 5 Common +5% damage · Gen 6+ Standard no bonus (label only). The tier shows on the title card, the boss VS card and the HUD. If the read fails, the game shows no bonus and plays normally. Genesis NFTs are a separate collection that FriendSDK v0.1.4 cannot select as a player; a Genesis-holder perk is on the roadmap.
 - **Boss VS card:** your Friend against the floor's keeper (a real Friend), both large with their numbers, before every boss fight.
 - **Chiptune soundtrack** generated in code, one theme per family floor, with a boss variant, a victory jingle and a separate Music toggle.
 - **An elite Friend per floor** (4× size, one extra family move, a guaranteed reward) and 31 room layouts, including family-themed ones.
@@ -30,7 +30,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/the-binding-of-rarefriend.git
 cd the-binding-of-rarefriend
-git checkout 462c57d267c9d03e1063627c667436806441816c
+git checkout e3f5894b21eff723cc22808cc36ac096ddc1c4ac
 npm ci
 npm run build
 npm run dev:game -- games/binding-of-rarefriend
@@ -78,9 +78,9 @@ Possible RF integrations, not implemented: an RF-priced second-chance heart, RF-
   - `npm test`: 116 passed, 2 skipped.
   - `npm run typecheck` and strict `tsc -p games/binding-of-rarefriend/tsconfig.json`.
   - `npx friendsdk build games/binding-of-rarefriend`.
-- **Headless simulation** (`node games/binding-of-rarefriend/tests/run-sim.mjs`): a bot plays 54 full runs across all nine player families. Invulnerable, it clears the whole dungeon in 27 of 27 runs. With normal health it wins 2 of 27 and reaches floor 2.4 on average. All 31 layouts are connected and every floor has an elite room. Signatures are balanced (average floor reached 2.00–2.56 across the 8, same seeds). It doesn't dodge, so this is not a balance measurement.
+- **Headless simulation** (`node games/binding-of-rarefriend/tests/run-sim.mjs`): a bot plays 54 full runs across all nine player families. Invulnerable, it clears the whole dungeon in 27 of 27 runs. With normal health it wins 1 of 27 and reaches floor 2.4 on average. On the same 18 seeds it reaches floor 2.83 on average as Gen 1 (Legendary) versus 1.94 as Gen 6. All 31 layouts are connected and every floor has an elite room. Signatures are balanced (average floor reached 2.00–2.56 across the 8, same seeds). It doesn't dodge, so this is not a balance measurement.
 - **Browser check** (`node games/binding-of-rarefriend/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended to answer the artwork registry and Multicall3. It covers desktop, phone landscape and phone portrait with no browser errors.
 - **Known check failure:** the stock `npx friendsdk test` fixture only answers artwork reads for sample Friend #7730, so it rejects the roster reads for other Friends by design.
 - **Real-wallet playtest:** done by the builder with a hardwired Generation 6 Friend.
-- **Limitations:** the random cast depends on the public Robinhood RPC; if it is unreachable, the game shows an error with Retry. The ID range 1–100,000 is an assumption about where hardwired Friends live. Portrait phones get a small 3:2 frame, so landscape is recommended.
+- **Limitations:** the random cast depends on the public Robinhood RPC; if it is unreachable, the game shows an error with Retry. Enemies are sampled from IDs 1–100,000 only; hardwired Friends also exist above that range (e.g. #332833 is a Gen 6). Portrait phones get a small 3:2 frame, so landscape is recommended.
 - **Credits:** code, rooms, props and sound effects by Fablizio (AI-assisted). Scenery is drawn in code and sounds are synthesized. Character art: canonical Rare Friends Generations sprites via the FriendSDK sprite reader; reward cues from the FriendSDK sound kit (see the SDK `NOTICE.md`). Inspired by the room-based twin-stick roguelite genre and not affiliated with any other game. No trading, wearable NFTs, creator fees or live economy. Production publication needs separate Rare Friends review.
