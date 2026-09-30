@@ -6,7 +6,7 @@ A daily time-attack dungeon, the same for everyone. Every ranked attempt costs $
 >
 > - **Same crypt for everyone, replay-verified ranking:** every ranked time is re-simulated from its recorded inputs before it counts (anti-cheat).
 > - **Generation is prestige only:** a badge, the share line and a free Legendary halo for Gen 1–2. It never changes the run, so the ranking stays fair.
-> - **Safety:** FriendSDK v0.1.4 · the preview never asks for a transaction, signature or approval (only wallet connection and the switch to Robinhood Chain) · played with a real wallet (Generation 6 Friend) on phone and desktop.
+> - **Safety:** FriendSDK v0.1.4 · the preview never asks for a transaction, signature or approval (only wallet connection and the switch to Robinhood Chain) · played by the builder with a real wallet and a Generation 6 Friend.
 
 **Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Token Activity · **SDK:** FriendSDK v0.1.4
 
