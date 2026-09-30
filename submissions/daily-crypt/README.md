@@ -12,13 +12,13 @@ A daily time-attack dungeon, the same for everyone. Every ranked attempt costs $
 
 Your ownership-verified Generations Friend runs a crypt of 10 rooms in a line. The rooms, the real Rare Friends inside them, their spawns and the power-up offer are generated from the UTC date, so every player faces exactly the same crypt. The lowest time wins, and each hit adds 5 seconds. Spending is the core loop: getting faster means paying for another attempt, and every attempt burns RF.
 
-![daily-crypt demo](https://raw.githubusercontent.com/Fablizio/daily-crypt/3106723e29a0bdaa166fbbbac296dc4b72fca702/games/daily-crypt/media/demo.gif)
+![daily-crypt demo](https://raw.githubusercontent.com/Fablizio/daily-crypt/033d7c0ef88bc8714d1acee1f514d30cbcc4173f/games/daily-crypt/media/demo.gif)
 
 *Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/daily-crypt/
-- **Source:** https://github.com/Fablizio/daily-crypt/tree/3106723e29a0bdaa166fbbbac296dc4b72fca702 (game in [`games/daily-crypt/`](https://github.com/Fablizio/daily-crypt/tree/3106723e29a0bdaa166fbbbac296dc4b72fca702/games/daily-crypt))
-- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/daily-crypt/blob/3106723e29a0bdaa166fbbbac296dc4b72fca702/games/daily-crypt/ECONOMY.md)
+- **Source:** https://github.com/Fablizio/daily-crypt/tree/033d7c0ef88bc8714d1acee1f514d30cbcc4173f (game in [`games/daily-crypt/`](https://github.com/Fablizio/daily-crypt/tree/033d7c0ef88bc8714d1acee1f514d30cbcc4173f/games/daily-crypt))
+- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/daily-crypt/blob/033d7c0ef88bc8714d1acee1f514d30cbcc4173f/games/daily-crypt/ECONOMY.md)
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -28,7 +28,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/daily-crypt.git
 cd daily-crypt
-git checkout 3106723e29a0bdaa166fbbbac296dc4b72fca702
+git checkout 033d7c0ef88bc8714d1acee1f514d30cbcc4173f
 npm ci
 npm run build
 npm run dev:game -- games/daily-crypt
@@ -45,7 +45,7 @@ Open `http://localhost:4173`, connect your wallet, select your Friend, and choos
 | Power-up | 1 / 2 / 3, or click | Tap a card |
 | Pause / mute | P or Esc / M, or the on-screen buttons | On-screen buttons |
 
-Settings and pause include **Mute** and **Reduce motion**. The clock and the run pause on blur, hidden tabs, the pause menu and the runtime's menus.
+Settings and pause include **Mute**, a separate **Music** toggle and **Reduce motion**. The clock and the run pause on blur, hidden tabs, the pause menu and the runtime's menus.
 
 **Rules:**
 - **Same crypt for everyone, every UTC day.** 10 rooms in a straight line, reset at 00:00 UTC. The route is linear on purpose: with a shared seed, a branching map would reward scouting instead of play.
@@ -63,6 +63,7 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
 - **Halo shop:** cosmetic outline colours for your Friend (20–80 RF, **100% burned**). They're render-only and never touch the simulation.
 - **Burn panel and projection:** today's burn split into entries, continues and halos, plus a projection for 100 / 1,000 / 10,000 attempts a day. At 1,000/day that's about 3,650 RF burned a day, using stated assumptions.
 - **Generation prestige:** your Friend's generation is read once (Gen 1 Legendary … Gen 6+ Standard) and shown as a badge in the lobby, on the result, on your leaderboard row and in the share line (`Friend #25090 (Gen 6)`). Gen 1–2 Friends unlock a free **Legendary** halo. It is display-only, never read by the simulation, so the ranked leaderboard stays a pure skill ranking.
+- **Chiptune soundtrack:** lobby theme, family themes per cast, boss variant, jingles; separate Music toggle. Synthesized with WebAudio, presentation only: it never touches the simulation, and replay results are unchanged.
 - **Viral loop:** **Copy result** to share your time, and a **ghost race** in Practice against your best run.
 
 ## Economy (simulated)
@@ -115,4 +116,4 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
   - The cast depends on the public Robinhood RPC, and a failed read shows Retry.
   - Family perks are not perfectly balanced; the leaderboard shows the family.
   - The sandbox has no storage, so balances and times reset on reload.
-- **Credits:** code, rooms and sound effects by Fablizio (AI-assisted). Scenery is drawn in code. Character art: canonical Rare Friends Generations sprites via the FriendSDK sprite reader. Reward cues come from the FriendSDK sound kit (see the SDK `NOTICE.md`). The engine is shared with the builder's Character Spotlight entry, *The Binding of RareFriend* (#84). No trading, wearable NFTs, creator fees or live economy. Production publication needs separate Rare Friends review.
+- **Credits:** code, rooms, sound effects and music by Fablizio (AI-assisted). Scenery is drawn in code. Character art: canonical Rare Friends Generations sprites via the FriendSDK sprite reader. Reward cues come from the FriendSDK sound kit (see the SDK `NOTICE.md`). The engine is shared with the builder's Character Spotlight entry, *The Binding of RareFriend* (#84). No trading, wearable NFTs, creator fees or live economy. Production publication needs separate Rare Friends review.
