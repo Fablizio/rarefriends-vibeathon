@@ -6,13 +6,17 @@ A guild-management game where Rare Friends work for each other. Hire real Friend
 
 Every hardwired Generations Friend has its own canonical wallet, and Friend Guild gives that wallet a job. Your verified Friend runs a guild and hires real Friends (read live from the SDK's artwork registry) for expeditions, and each fee pays the hired Friend's owner. Expeditions never create RF: they bring Shards, a soft currency that is spent together with RF (burned) on upgrades and gear. An in-game economy simulator runs the whole economy for 30 days with adjustable parameters.
 
-![friend-guild demo](https://raw.githubusercontent.com/Fablizio/friend-guild/649dedd59e363a597780c8470f7335d858c3f063/games/friend-guild/media/demo.gif)
+## Generation sets the value
 
-*Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
+In-game value follows market value: a Friend's generation (read on chain, `generation(id)`, batched through Multicall3) multiplies its hire fee, so its wallet earns in step with its market price, and raises its expedition power by a quarter of that premium, so rare mercenaries are worth hiring but never mandatory. Holding rarer Friends pays. Tier multipliers (fee ×, power ×): **Gen 1 Legendary ×3 (1.5) · Gen 2 Epic ×2 (1.25) · Gen 3 Rare ×1.5 (1.125) · Gen 4 Uncommon ×1.25 · Gen 5 Common ×1.1 · Gen 6+ Standard ×1 · unknown/failed read "Gen ?" ×1.** Every mercenary card and your own Friend show a badge such as **GEN 1 · LEGENDARY ×3**; the 70/20/10 split, demand pricing and RF conservation are unchanged. In the simulator a listed Gen 1 Friend earns about 198 RF/day vs 56 for a Gen 6 (exactly 3× per hire, about 3.5× overall). Genesis NFTs are a separate collection that FriendSDK v0.1.4 cannot select as a player; a Genesis tier is on the roadmap.
+
+![friend-guild demo](https://raw.githubusercontent.com/Fablizio/friend-guild/ff38019479ab73644f1e25bddcb18ae75f6bf388/games/friend-guild/media/demo.gif)
+
+*Demo recorded headlessly with SDK sample sprites and a bot at the controls, before the generation tier badges; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/friend-guild/
-- **Source:** https://github.com/Fablizio/friend-guild/tree/649dedd59e363a597780c8470f7335d858c3f063 (game in [`games/friend-guild/`](https://github.com/Fablizio/friend-guild/tree/649dedd59e363a597780c8470f7335d858c3f063/games/friend-guild))
-- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/friend-guild/blob/649dedd59e363a597780c8470f7335d858c3f063/games/friend-guild/ECONOMY.md)
+- **Source:** https://github.com/Fablizio/friend-guild/tree/ff38019479ab73644f1e25bddcb18ae75f6bf388 (game in [`games/friend-guild/`](https://github.com/Fablizio/friend-guild/tree/ff38019479ab73644f1e25bddcb18ae75f6bf388/games/friend-guild))
+- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/friend-guild/blob/ff38019479ab73644f1e25bddcb18ae75f6bf388/games/friend-guild/ECONOMY.md)
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -22,7 +26,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/friend-guild.git
 cd friend-guild
-git checkout 649dedd59e363a597780c8470f7335d858c3f063
+git checkout ff38019479ab73644f1e25bddcb18ae75f6bf388
 npm ci
 npm run build
 npm run dev:game -- games/friend-guild
@@ -34,10 +38,10 @@ Open `http://localhost:4173`, connect your wallet and select your Friend. Static
 
 Tap or click. Everything is also keyboard-accessible.
 
-- **Guild:** your Friend's family and seed stats, rating, hire fee and gear.
+- **Guild:** your Friend's generation tier, family and seed stats, rating, hire fee and gear.
   - **List** it in the tavern and simulated guilds hire it, with 70% of each fee going to its wallet.
   - A live feed shows every hire, and the season board ranks guilds by fame.
-- **Tavern:** eight real Friends with stats, trait and live fee.
+- **Tavern:** eight real Friends with generation tier badge, stats, trait and live fee.
   - Hire up to 2 for your next expedition. Each hire raises that Friend's price by 5%, and demand fades over time.
 - **Expedition:** four family zones (tier 1–4). Each zone favours two counter-families.
   - The success chance (team power, guild level, affinity) is shown before launch.
@@ -53,7 +57,7 @@ Tap or click. Everything is also keyboard-accessible.
 
 | | |
 | --- | --- |
-| Mercenary fee | (1 + 0.22 × rating) RF × 1.05^recent hires |
+| Mercenary fee | (1 + 0.22 × rating) RF × generation multiplier (Gen 1 ×3 … Gen 6 ×1) × 1.05^recent hires |
 | Fee split | **70% hired Friend's canonical wallet · 20% burned · 10% season fund** |
 | Guild upgrade | ◆ 40·L + 8·L RF (RF burned) |
 | Gear craft | ◆ 30 + 4 RF (RF burned) |
@@ -62,10 +66,11 @@ Tap or click. Everything is also keyboard-accessible.
 | Starting balance | 150 RF, simulated, per session |
 
 - **Backing:** the game mints no RF. Shards and gear are never redeemable for RF, so no prize backing is required.
-- **Simulator, default settings** (1,000 players, 3 expeditions a day, 30 days):
-  - about 2.25M RF spent: ≈720K burned and ≈1.34M paid to Friend owners;
-  - the average fee settles from 7.7 to 10.9 RF;
-  - the top 10% of Friends earn about 15% of owner income;
+- **Simulator, default settings** (1,000 players, 3 expeditions a day, 30 days, assumed generation mix skewed toward Gen 5–6):
+  - about 2.51M RF spent: ≈765K burned and ≈1.53M paid to Friend owners;
+  - the average fee settles from 8.7 to 12.4 RF;
+  - a listed Gen 1 Friend earns ≈198 RF/day, a Gen 6 ≈56 RF/day;
+  - the top 10% of Friends earn about 18% of owner income;
   - Shard supply levels off;
   - the conservation check passes.
 - **Chance-game API:** the SDK's chance game is not used. The required `game.json` carries **unused schema-only terms**: a 1 RF token with a single 10,000 bps reward of 1 RF, both `1000000000000000000` base units.
@@ -78,11 +83,11 @@ Tap or click. Everything is also keyboard-accessible.
 
 - **Model:** players join and leave the simulator each day, and the listed-Friend pool follows them. RF conservation and determinism still hold.
 - **Scenario presets** (1,000 players, seed 42, 30 days):
-  - **Baseline:** 713K RF burned (32% of RF spent). A listed Friend earns about 56 RF/day, and a player spends about 75 RF/day.
-  - **Bear market:** players fall 1,000 → 413. The daily burn falls 51% from its peak, but a listed Friend still earns about 32 RF/day, because the listed pool shrinks too.
-  - **Hype:** players grow 1,000 → 4,115, and the daily burn grows from 31K to 96K RF.
-  - **Whales:** 5% of players spend 17% of all RF, and the top 10% of Friends still earn only 14% of owner income.
-  - **Bot attack:** self-hiring bots lose 30% of what they spend (burn plus season). A per-Friend hire cap of 3 a day cuts wash volume by 65%.
+  - **Baseline:** 765K RF burned (30% of RF spent). A listed Friend earns about 64 RF/day, and a player spends about 84 RF/day.
+  - **Bear market:** players fall 1,000 → 413. The daily burn falls 52% from its peak, but a listed Friend still earns about 36 RF/day, because the listed pool shrinks too.
+  - **Hype:** players grow 1,000 → 4,115, and the daily burn grows from 33K to 104K RF.
+  - **Whales:** 5% of players spend 16% of all RF, and the top 10% of Friends still earn only 18% of owner income.
+  - **Bot attack:** self-hiring bots lose 30% of what they spend (burn plus season). A per-Friend hire cap of 3 a day cuts wash volume by 63%.
 - **Flow diagram:** RF flows are shown in the game and as a Mermaid chart in ECONOMY.md.
 
 ## Checks, credits and limitations
@@ -91,13 +96,14 @@ Tap or click. Everything is also keyboard-accessible.
   - `npx friendsdk check games/friend-guild`: valid.
   - Strict `tsc -p games/friend-guild/tsconfig.json`.
   - `npm test` (SDK): 116 passed, 2 skipped. `npm run typecheck` passes.
-- **Model checks** (`node games/friend-guild/tests/run-econ.mjs`): 15 passed. Fee splits and growth/churn conserve RF, the model never mints RF and is deterministic, a higher burn burns more, earnings stay spread, Shard supply is bounded, all presets run, the bot attack is net-negative for the attackers, and the hire cap limits wash volume.
-- **Browser check** (`node games/friend-guild/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended for the artwork registry. It walks guild → hire two → launch → skip → result → workshop → economy on desktop and phone layouts, with no browser errors.
+- **Model checks** (`node games/friend-guild/tests/run-econ.mjs`): 17 passed. Fee splits and growth/churn conserve RF, the model never mints RF and is deterministic, a higher burn burns more, earnings stay spread, Shard supply is bounded, all presets run, the bot attack is net-negative for the attackers, the hire cap limits wash volume, fees scale with the generation tier (a Gen 1 wallet gets 3× a Gen 6's at equal demand) and the model with a generation mix still conserves RF.
+- **Browser check** (`node games/friend-guild/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended for the artwork registry and for `generation(id)` inside Multicall3 (including failed reads, which fall back to ×1). It checks the tier badges and walks guild → hire two → launch → skip → result → workshop → economy on desktop and phone layouts, with no browser errors.
 - **Real-wallet playtest:** done by the builder with a hardwired Generation 6 Friend.
 - **Known check failure:** the stock `npx friendsdk test` fixture only answers artwork reads for sample Friend #7730, so it rejects the tavern's roster reads by design.
 - **Limitations:**
   - Other guilds and their hires are simulated in the browser, and hires are non-exclusive.
   - No persistence: the session resets on reload.
   - The simulator is a model with stated assumptions, not a forecast.
-  - Tavern Friends depend on the public Robinhood RPC, and a failed read shows Retry.
+  - Tavern Friends depend on the public Robinhood RPC, and a failed read shows Retry. Generation reads are best effort (×1 on failure).
+  - The tavern cast is sampled from token IDs 1–100,000; hardwired Friends also exist above that range (e.g. #332833 is a Gen 6).
 - **Credits:** code and design by Fablizio (AI-assisted). Scenery is drawn in code. Character art: canonical Rare Friends Generations sprites via the FriendSDK sprite reader. Sounds come from the FriendSDK sound kit (see the SDK `NOTICE.md`). The same builder's other entries are *The Binding of RareFriend* (#84, Character Spotlight) and *Daily Crypt* (#85, Token Activity). No trading, wearable NFTs, creator fees or live economy. Production publication needs separate Rare Friends review.
