@@ -2,17 +2,23 @@
 
 A daily time-attack dungeon, the same for everyone. Every ranked attempt costs $RAREFRIENDS: 20% is burned and 80% funds the prize pool for the day's three fastest verified runs.
 
+> **🔥 ~3,650 RF burned a day per 1,000 ranked attempts** (simulated; 20% of every entry, 100% of every continue and halo; assumptions below). Per attempt: 2 RF entry burn + 1.25 RF continue burn (25% of attempts × 5 RF) + 0.4 RF halo burn (1 halo per 100 attempts × ~40 RF) = 3.65 RF.
+>
+> - **Same crypt for everyone, replay-verified ranking:** every ranked time is re-simulated from its recorded inputs before it counts (anti-cheat).
+> - **Generation is prestige only:** a badge, the share line and a free Legendary halo for Gen 1–2. It never changes the run, so the ranking stays fair.
+> - **Safety:** FriendSDK v0.1.4 · the preview never asks for a transaction, signature or approval (only wallet connection and the switch to Robinhood Chain) · played with a real wallet (Generation 6 Friend) on phone and desktop.
+
 **Builder:** Fablizio · [GitHub @Fablizio](https://github.com/Fablizio) · [X @FabrizioCottone](https://x.com/FabrizioCottone) · [Telegram @Fablizio](https://t.me/Fablizio) · **Category:** Token Activity · **SDK:** FriendSDK v0.1.4
 
 Your ownership-verified Generations Friend runs a crypt of 10 rooms in a line. The rooms, the real Rare Friends inside them, their spawns and the power-up offer are generated from the UTC date, so every player faces exactly the same crypt. The lowest time wins, and each hit adds 5 seconds. Spending is the core loop: getting faster means paying for another attempt, and every attempt burns RF.
 
-![daily-crypt demo](https://raw.githubusercontent.com/Fablizio/daily-crypt/9d6d434aa15f84dfe54aad7d578fcf4e2ca5a958/games/daily-crypt/media/demo.gif)
+![daily-crypt demo](https://raw.githubusercontent.com/Fablizio/daily-crypt/3106723e29a0bdaa166fbbbac296dc4b72fca702/games/daily-crypt/media/demo.gif)
 
 *Demo recorded headlessly with SDK sample sprites and a bot at the controls; in play you see your own Friend and live Friends from the chain.*
 
 - **Play:** https://fablizio.github.io/daily-crypt/
-- **Source:** https://github.com/Fablizio/daily-crypt/tree/9d6d434aa15f84dfe54aad7d578fcf4e2ca5a958 (game in [`games/daily-crypt/`](https://github.com/Fablizio/daily-crypt/tree/9d6d434aa15f84dfe54aad7d578fcf4e2ca5a958/games/daily-crypt))
-- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/daily-crypt/blob/9d6d434aa15f84dfe54aad7d578fcf4e2ca5a958/games/daily-crypt/ECONOMY.md)
+- **Source:** https://github.com/Fablizio/daily-crypt/tree/3106723e29a0bdaa166fbbbac296dc4b72fca702 (game in [`games/daily-crypt/`](https://github.com/Fablizio/daily-crypt/tree/3106723e29a0bdaa166fbbbac296dc4b72fca702/games/daily-crypt))
+- **Economy design:** [`ECONOMY.md`](https://github.com/Fablizio/daily-crypt/blob/3106723e29a0bdaa166fbbbac296dc4b72fca702/games/daily-crypt/ECONOMY.md)
 - **Wallet and network:** a browser wallet on **Robinhood mainnet (4663)** holding a hardwired Generations NFT (generation ≥ 1). On a phone, open the link in your wallet's in-app browser. The SDK runtime handles connection, Friend selection and the fresh ownership check. No transaction or signature is requested.
 
 ## Run it
@@ -22,7 +28,7 @@ Node.js 22+ on Linux or Ubuntu/WSL2:
 ```sh
 git clone https://github.com/Fablizio/daily-crypt.git
 cd daily-crypt
-git checkout 9d6d434aa15f84dfe54aad7d578fcf4e2ca5a958
+git checkout 3106723e29a0bdaa166fbbbac296dc4b72fca702
 npm ci
 npm run build
 npm run dev:game -- games/daily-crypt
@@ -45,9 +51,10 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
 - **Same crypt for everyone, every UTC day.** 10 rooms in a straight line, reset at 00:00 UTC. The route is linear on purpose: with a shared seed, a branching map would reward scouting instead of play.
 - **Doors** open only when the room is empty. Rooms scale from 6 to 14 Friends, with elites from room 5 and two families mixed from room 7.
 - **After room 5**, choose 1 of 3 power-ups. Everyone gets the same three, and the clock stops while you choose.
-- **Room 10 is the boss:** a real Friend at 6× size with four attacks, faster below half health. The clock stops when it falls.
+- **Room 10 is the boss:** a real Friend at 6× size with four attacks, faster below 60% health. The clock stops when it falls.
 - **No healing.** Each hit adds **+5 s**. You have **6 guard** (7 for Colossus), and the last hit ends the attempt.
 - **Score** = clear time + 5 s × hits. Your Friend's family perk applies.
+- **Difficulty raised after playtesting:** regular enemies +20% HP, elites and the boss +25% HP, enemies 10% faster, cooldowns ×0.85, enemy shots 10% faster, boss enrage at 60% HP. Guard, hit penalty, continue and power-ups are unchanged.
 - **Generation is prestige only:** a badge, the share line and a free Legendary halo for Gen 1–2. It never changes the run, so ranked play stays fair. Genesis NFTs are a separate collection that FriendSDK v0.1.4 cannot select as a player.
 
 ## More ways to spend (and burn)
@@ -76,6 +83,8 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
 - **Edge cases:** unpaid places roll over to the next day, and an optional sponsored floor handles the cold start. See ECONOMY.md.
 - **Chance-game API:** the SDK's chance game is not used, because an entry is a fixed fee, not a chance purchase. The required `game.json` carries **unused schema-only terms**: a 1 RF token with a single 10,000 bps reward of 1 RF, both `1000000000000000000` base units.
 
+**The protocol's 50/50 rule:** Rare Friends splits activation, hardwire, promote and upgrade payments 50% burned / 50% RF rewards into Friends' NFT wallets ([source](https://iq.wiki/en/wiki/rare-friends)). Daily Crypt entries are a prize-pool game, so 80% must fund the top-3 payouts and 20% burns; continues and halos burn 100%, above the protocol's 50%. A documented **protocol-aligned variant** (not implemented) keeps entries unchanged and splits continues and halos 50/50: per 1,000 attempts a day that is **2,825 RF burned + 825 RF of rewards** to Friend wallets, versus **3,650 RF burned** now. See ECONOMY.md.
+
 **Anti-cheat by replay:**
 - The engine runs at a fixed 60 Hz step, with gameplay randomness taken only from the day's seed.
 - Each tick's input is recorded (4 bytes) along with the power-up choice.
@@ -96,8 +105,8 @@ Settings and pause include **Mute** and **Reduce motion**. The clock and the run
 - **Headless bot simulation** (`node games/daily-crypt/tests/run-sim.mjs`), 54 full runs across all nine player families:
   - every honest run re-verifies by replay (27/27, including 17 runs that bought a continue);
   - all 68 tampered continues are rejected, the ghost tracks its record 9/9, and halos have no effect on the simulation 9/9;
-  - invulnerable, the bot clears the crypt in 22 of 27 runs, in roughly 2.5–6 minutes;
-  - with normal guard it dies around room 4. It doesn't dodge, and the crypt is intended to be hard.
+  - invulnerable, the bot clears the crypt in 19 of 27 runs (22 before the difficulty raise), in roughly 3–6 minutes;
+  - with normal guard it dies around room 4 (average 3.9, was 4.4; deepest room 8). It doesn't dodge, and the crypt is intended to be hard.
 - **Browser check** (`node games/daily-crypt/tests/browser.mjs`): the real SDK runtime in headless Chromium with the SDK's mock wallet and RPC fixtures, extended for the artwork registry. It covers desktop and phone layouts, the ranked-entry confirmation and play, the generation badge, share line and free Legendary halo, with no browser errors.
 - **Real-wallet playtest:** done by the builder with a hardwired Generation 6 Friend.
 - **Known check failure:** the stock `npx friendsdk test` fixture only answers artwork reads for sample Friend #7730, so it rejects the roster reads by design.
